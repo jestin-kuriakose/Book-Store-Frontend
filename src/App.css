@@ -1,0 +1,79 @@
+.App {
+  display: flex;
+  justify-content: center;
+  /* height: 100vh; */
+  padding: 0 100px;
+  text-align: center;
+}
+
+
+.books-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 50px;
+  flex-wrap: wrap;
+}
+.book-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.book-container p {
+  margin: 0;
+  padding: 10px;
+}
+.book-container h3 {
+  margin: 0;
+}
+a {
+  background-color: rebeccapurple;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  border: none;
+  font-size: 1rem;
+  margin: 0 10px;
+}
+.button-container {
+  margin: 20px;
+}
+button {
+  background-color: rebeccapurple;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  border: none;
+}
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.btn-selected {
+  border-bottom: 3px solid white;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.form input {
+  padding: 20px;
+  font-size: 1rem;
+}
+.incomplete {
+  border: 2px solid indianred;
+}
+.form textarea {
+  padding: 20px;
+  font-size: 1rem;
+}
