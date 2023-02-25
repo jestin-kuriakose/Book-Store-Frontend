@@ -1,7 +1,7 @@
 import axios from "axios"
 import jwt_decode from "jwt-decode"
 
-const url = PROCESS.ENV.API_URL
+const url = process.env.API_URL
 // const url = "http://35.79.223.19:8800"
 
 const axiosJWT = axios.create()
