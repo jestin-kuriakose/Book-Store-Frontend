@@ -6,6 +6,7 @@ import { onSuccess } from '../redux/userSlice'
 import { requestwithTokens } from '../requests'
 
 const Book = ({book}) => {
+    console.log(book)
     const currentUser = useSelector((state)=>state.user.currentUser)
     const dispatch = useDispatch()
     const handleDelete = async (id) => {

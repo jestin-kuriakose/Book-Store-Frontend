@@ -47,6 +47,10 @@ button {
   cursor: pointer;
   font-size: 1rem;
   border: none;
+
+}
+.logout-btn {
+
 }
 
 button:disabled,
@@ -76,4 +80,105 @@ button[disabled]{
 .form textarea {
   padding: 20px;
   font-size: 1rem;
+}
+
+.overlay-background {
+  display: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.834);
+  color: white;
+}
+
+.loading-screen {
+  display: fixed;
+  height: 100vh;
+  width: 100vw;
+  opacity: 0.5;
+}
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.loading-spinner {
+
+}
+.loading-spin {
+  object-fit: contain;
+}
+
+/* skeleton */
+.sk-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  animation: skeleton 1s ease infinite alternate;
+}
+@keyframes skeleton {
+  to {
+    opacity: 0.5;
+  }
+}
+.sk-book-img {
+  height: 400px;
+  width: 200px;
+  background-color: #313131;
+}
+.sk-book-price {
+  background-color: #313131;
+}
+.sk-book-title {
+  background-color: #313131;
+}
+
+.book-container p {
+  margin: 0;
+  padding: 10px;
+}
+.book-container h3 {
+  margin: 0;
+}
+
+.circle, .custom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom {
+  flex-direction: column;
+}
+
+.balls {
+  display: flex;
+}
+
+.ball {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  margin-right: 10px;
+  animation: ball .5s ease infinite alternate;
+}
+
+.ball-2 {
+  animation-delay: 0.1s;
+}
+.ball-3 {
+  animation-delay: 0.2s;
+}
+
+@keyframes ball {
+  to {
+    transform: translateY(-10px);
+  }
 }
