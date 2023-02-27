@@ -2,7 +2,7 @@ import axios from "axios"
 import jwt_decode from "jwt-decode"
 
 const url = "https://book-shop-api-sz38.onrender.com"
-// const url = process.env.REACT_APP_API_URL
+
 // const url = "http://35.79.223.19:8800"
 
 const axiosJWT = axios.create()
