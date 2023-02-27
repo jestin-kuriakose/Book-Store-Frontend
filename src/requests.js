@@ -1,7 +1,8 @@
 import axios from "axios"
 import jwt_decode from "jwt-decode"
 
-const url = PROCESS.ENV.API_URL
+const url = "https://book-shop-api-sz38.onrender.com"
+// const url = process.env.REACT_APP_API_URL
 // const url = "http://35.79.223.19:8800"
 
 const axiosJWT = axios.create()
@@ -19,11 +20,9 @@ axiosJWT.interceptors.request.use(
         if (decodedToken.exp * 1000 < currentDate.getTime()) {
             try {
                 const res = await axios.post(`${url}/refresh`, { token: refToken });
-                console.log(res.data)
                 console.log("new access token created")
                 config.headers["authorization"] = "Bearer " + res.data.accessToken;
                 // config.data["data"] = res.data.refreshToken
-                console.log(config)
             } catch (err) {
                 console.log(err);
             }
