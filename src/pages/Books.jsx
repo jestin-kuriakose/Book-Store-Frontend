@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { increment } from '../redux/counterSlice';
 import { requestWithoutTokens, requestwithTokens } from '../requests';
 import { onSuccess } from '../redux/userSlice';
+import Skeleton from '../components/Skeleton';
 
 const Books = () => {
     const currentUser = useSelector((state)=> state.user.currentUser)
@@ -17,16 +18,24 @@ const Books = () => {
 
     const [allBooks, setAllBooks] = useState([])
     const [pageSelected, setPageSelected] = useState(1)
+    const [isLoading, setIsLoading] = useState(false)
+    const [isLoggingOut, setIsLoggingOut] = useState(false)
+    const [error, setError] = useState()
 
     let pages = []
     const [allPages, setAllPages] = useState([])
 
     useEffect(()=> {
+        setIsLoading(true)
+        setError("")
         const getBooks = async () => {
             try{
                 const res = await requestwithTokens('get', '/books', currentUser.refreshToken, currentUser.accessToken, false)
                 const result = res.data
-                
+                if(!Array.isArray(result)) {
+                    throw new Error(res.data.code)
+                }
+
                 // updating the accessToken in the state if there is a new one created 
                 const newAccessToken = res.config.headers.authorization.split(" ")[1]
                 if(currentUser.accessToken != newAccessToken) {
@@ -49,9 +58,12 @@ const Books = () => {
                 })
 
                 setAllBooks(newBooks)
+                setIsLoading(false)
+                console.log(Array.isArray(allBooks))
 
             } catch(err) {
-                console.log(err)
+                setError(err.message)
+                setIsLoading(false)
             }
         }
         getBooks()
@@ -70,6 +82,7 @@ const Books = () => {
     }
 
     const handleLogout = async() => {
+        setIsLoggingOut(true)
         const res = await requestwithTokens('post', '/logout', currentUser.refreshToken, currentUser.accessToken, false)
 
       // updating the accessToken in the state if there is a new one created 
@@ -77,7 +90,7 @@ const Books = () => {
         if(currentUser.accessToken != newAccessToken) {
             dispatch(onSuccess({...currentUser, accessToken: newAccessToken}))
         }
-
+        setIsLoggingOut(false)
         localStorage.clear();
         window.location.reload()
     }
@@ -87,24 +100,26 @@ const Books = () => {
         <div className='cont'>
             <h1 style={{textAlign:"center"}}>Book Shop</h1>
             <Link to={'/add'}>Add New Book</Link>
-            {userLoggedIn ? <button onClick={()=>handleLogout()}>Logout</button> : 
+            {userLoggedIn ? <button className='logout-btn' onClick={()=>handleLogout()}>{isLoggingOut ? <Skeleton type='circle' /> : 'Logout'}</button> : 
             <Link to={'/login'}>Login</Link>}
         </div>
 
         <p>Hello {currentUser.user_name} !</p>
-        
+        {error ? <Skeleton type={'custom'} error={error}/> :
         <div>
-            {allPages.map((p, index)=> (
-                <button className={pageSelected == index+1 ? "btn-selected" : ""} key={index} onClick={()=>setPageSelected(p)}>{p}</button>
-            ))}
-        </div>
+            <div>
+                {allPages.map((p, index)=> (
+                    <button className={pageSelected == index+1 ? "btn-selected" : ""} key={index} onClick={()=>setPageSelected(p)}>{p}</button>
+                ))}
+            </div>
 
-        <div className='books-container'>
-            {allBooks?.map((books, index)=>(
-                 (books.count == pageSelected) && <Book key={index} book={books}/>
-        ))
-        
-        }</div>
+            
+            {isLoading ? <div className='books-container'> <Skeleton type='feed' /> </div> : 
+                <div className='books-container'>{allBooks?.map((books, index)=>(
+                    (books.count == pageSelected) && <Book key={index} book={books}/>
+            ))}
+            </div>}
+        </div>}
 
     </div>
   )
